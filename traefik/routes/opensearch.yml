@@ -1,0 +1,20 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: opensearch
+  namespace: heroes
+spec:
+  entryPoints:
+    - appmetrics
+  routes:
+  - kind: Rule
+    match: Host(`opensearch.heroes.doit.priv`)
+    services:
+    - kind: Service
+      name: opensearch-cluster-master
+      namespace: heroes
+      port: 9200
+      scheme: https
+  tls:
+    secretName: heroes-wildcard

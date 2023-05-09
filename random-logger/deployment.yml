@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-logger
+  namespace: heroes
+  labels:
+    app: random-logger
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: random-logger
+  template:
+    metadata:
+      namespace: heroes
+      labels:
+        app: random-logger
+    spec:
+      containers:
+      - name: random-logger
+        image: docker.io/chentex/random-logger:latest

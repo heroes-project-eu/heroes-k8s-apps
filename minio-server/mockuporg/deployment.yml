@@ -1,0 +1,34 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio-server-mockuporg
+  namespace: heroes
+  labels:
+    app: minio-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio-server
+  template:
+    metadata:
+      namespace: heroes
+      labels:
+        app: minio-server
+    spec:
+      containers:
+      - name: minio-server-mockuporg
+        image: gitlab.heroes.priv:5050/heroes/k8s-apps/minio-server:latest
+        args: [
+          "keycloak-server.heroes.svc.cluster.local",  # KEYCLOAK_URL
+          "8080",  # KEYCLOAK_PORT
+          "mockuporg",  # ORGANIZATION_NAME
+          "account",  # ORGANIZATION_CLIENT_ID
+          "FaYCacpEvsDwjsQ3TqX6",  # ORGANIZATION_CLIENT_SECRET
+          "minio-server-mockuporg.heroes.svc.cluster.local",  # MINIO_SERVER_URL
+          "9000",  # MINIO_SERVER_PORT
+          "9001",  # MINIO_SERVER_CONSOLE_PORT
+        ]
+      imagePullSecrets:
+        - name: heroes-registry-ro

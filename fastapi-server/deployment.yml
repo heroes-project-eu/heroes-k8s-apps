@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-server
+  namespace: heroes
+  labels:
+    app: fastapi-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi-server
+  template:
+    metadata:
+      namespace: heroes
+      labels:
+        app: fastapi-server
+    spec:
+      containers:
+      - name: fastapi-server
+        image: gitlab.heroes.priv:5050/heroes/k8s-apps/fastapi-server:latest
+      imagePullSecrets:
+        - name: heroes-registry-ro

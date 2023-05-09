@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak-server
+  namespace: heroes
+  labels:
+    app: keycloak-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak-server
+  template:
+    metadata:
+      namespace: heroes
+      labels:
+        app: keycloak-server
+    spec:
+      containers:
+      - name: keycloak-server
+        image: gitlab.heroes.priv:5050/heroes/k8s-apps/keycloak-server:latest
+      imagePullSecrets:
+        - name: heroes-registry-ro
+

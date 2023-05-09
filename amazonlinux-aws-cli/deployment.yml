@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: amazonlinux-aws-cli
+  namespace: heroes
+  labels:
+    app: amazonlinux-aws-cli
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: amazonlinux-aws-cli
+  template:
+    metadata:
+      namespace: heroes
+      labels:
+        app: amazonlinux-aws-cli
+    spec:
+      containers:
+      - name: amazonlinux-aws-cli
+        image: gitlab.heroes.priv:5050/heroes/k8s-apps/amazonlinux-aws-cli:1.0.1
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "while true; do sleep 30; done;" ]
+      imagePullSecrets:
+        - name: heroes-registry-ro

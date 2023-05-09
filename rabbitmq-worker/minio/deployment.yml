@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-worker-minio
+  namespace: heroes
+  labels:
+    app: rabbitmq-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq-worker
+  template:
+    metadata:
+      namespace: heroes
+      labels:
+        app: rabbitmq-worker
+    spec:
+      containers:
+      - name: rabbitmq-worker-minio
+        image: gitlab.heroes.priv:5050/heroes/k8s-apps/rabbitmq-worker-minio:latest
+        args: [
+          "minio"
+        ]
+      imagePullSecrets:
+        - name: heroes-registry-ro

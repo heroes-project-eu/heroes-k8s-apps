@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: platform-tests
+  namespace: heroes
+  labels:
+    app: platform-tests
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: platform-tests
+  template:
+    metadata:
+      namespace: heroes
+      labels:
+        app: platform-tests
+    spec:
+      containers:
+      - name: platform-tests
+        image: gitlab.heroes.priv:5050/heroes/k8s-apps/platform-tests:latest
+      imagePullSecrets:
+        - name: heroes-registry-ro

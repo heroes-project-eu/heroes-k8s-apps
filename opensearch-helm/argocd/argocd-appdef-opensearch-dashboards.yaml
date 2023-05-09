@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: opensearch-dashboards
+  namespace: argocd
+spec:
+  project: heroes
+  source:
+    repoURL: 'https://54.72.174.143/api/v4/projects/3/packages/helm/stable'
+    targetRevision: HEAD # For Helm, this refers to the chart version.
+    path: ''
+    # helm specific config
+    chart: opensearch-dashboards
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    name: ''
+    namespace: heroes
+    server: 'https://kubernetes.default.svc'

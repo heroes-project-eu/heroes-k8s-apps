@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql-server
+  namespace: heroes
+  labels:
+    app: postgresql-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgresql-server
+  template:
+    metadata:
+      namespace: heroes
+      labels:
+        app: postgresql-server
+    spec:
+      containers:
+      - name: postgresql-server
+        image: gitlab.heroes.priv:5050/heroes/k8s-apps/postgresql-server:latest
+      imagePullSecrets:
+        - name: heroes-registry-ro
